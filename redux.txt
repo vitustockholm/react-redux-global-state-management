@@ -1,0 +1,45 @@
+------redux-actions
+Create action creators in flux standard action format.
+
+increment = createAction('INCREMENT', amount => amount)
+increment = createAction('INCREMENT')  // same
+increment(42) === { type: 'INCREMENT', payload: 42 }
+// Errors are handled for you:
+err = new Error()
+increment(err) === { type: 'INCREMENT', payload: err, error: true }
+
+-----reduce-reducers
+Combines reducers (like combineReducers()), but without namespacing magic.
+
+re = reduceReducers(
+  (state, action) => state + action.number,
+  (state, action) => state + action.number
+)
+
+re(10, { number: 2 })  //=> 14
+
+------flux-standard-action
+
+{ type: 'ADD_TODO', payload: { text: 'Work it' } }
+{ type: 'ADD_TODO', payload: new Error(), error: true }
+
+--------redux-multi
+Dispatch multiple actions in one action creator.
+
+store.dispatch([
+  { type: 'INCREMENT', payload: 2 },
+  { type: 'INCREMENT', payload: 3 }
+])
+-----redux-effects
+Pass side effects declaratively to keep your actions pure.
+
+{
+  type: 'EFFECT_COMPOSE',
+  payload: {
+    type: 'FETCH'
+    payload: {url: '/some/thing', method: 'GET'}
+  },
+  meta: {
+    steps: [ [success, failure] ]
+  }
+}
